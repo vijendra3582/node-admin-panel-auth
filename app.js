@@ -35,11 +35,7 @@ app.set('views', 'views');
 
 
 
-
-
-
-app.use(userRoutes);
-
+app.use('/admin',adminRoutes);
 
 
 Mongoose.connect('mongodb+srv://rattu:lenskart@cluster0-xlej3.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {

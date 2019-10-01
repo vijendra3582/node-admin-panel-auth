@@ -1,0 +1,10 @@
+<div class="page-header">
+<h3 class="page-title"> <%- title %> </h3>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+    <% for (let [i,breadcrumb] of breadcumbs.entries()) {%>
+        <li class="breadcrumb-item <%- breadcrumb.class %>"><% if(breadcrumb.url != '#'){ %><a href="<%-breadcrumb.url%>"><% } %><%- breadcrumb.name %><% if(breadcrumb.url != '#'){ %></a><% } %></li>
+        <% } %>
+    </ol>
+</nav>
+</div>
