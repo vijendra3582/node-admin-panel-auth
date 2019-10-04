@@ -22,13 +22,15 @@
   },
   "homepage": "https://github.com/vijendra3582/node-admin-panel-auth#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.2.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.7.3",
+    "node-input-validator": "^4.1.0",
     "socket.io": "^2.3.0"
   }
 }
