@@ -38,7 +38,7 @@ app.set('views', 'views');
 app.use('/admin',adminRoutes);
 
 
-Mongoose.connect('mongodb+srv://rattu:lenskart@cluster0-xlej3.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
+Mongoose.connect('mongodb+srv://exam:exam@exam-ens1o.mongodb.net/admin?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
     console.log('Database connected');
     const server = app.listen(3001, () => {
         console.log('Database connected');
