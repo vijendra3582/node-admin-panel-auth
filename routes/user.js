@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/', homeController.renderIndex);
 
+router.get('*',homeController.render404);
+
 module.exports = router;

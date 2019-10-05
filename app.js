@@ -7,7 +7,7 @@ const MongoDbStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 
 //Import Models
-const User = require('./models/role');
+const User = require('./models/user');
 
 //Import Routes
 const adminRoutes  = require('./routes/admin');
@@ -17,10 +17,10 @@ const authRoutes  = require('./routes/auth');
 const app = express();
 
 //Create Store For Session
-const store = new MongoDBStore({
-    uri: 'mongodb+srv://exam:exam@exam-ens1o.mongodb.net/admin?retryWrites=true&w=majority',
-    collection: 'sessions'
-});
+// const store = new MongoDbStore({
+//     uri: 'mongodb+srv://exam:exam@exam-ens1o.mongodb.net/admin?retryWrites=true&w=majority',
+//     collection: 'sessions'
+// });
 
 //Parse Form Packet of data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,15 +32,15 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //Config Session
-app.use(session({
-    secret: 'abcdef',
-    resave: false,
-    saveUninitialized: false,
-    store: store
-}));
+// app.use(session({
+//     secret: 'abcdef',
+//     resave: false,
+//     saveUninitialized: false,
+//     store: store
+// }));
 
 //Set flash
-app.use(flash());
+// app.use(flash());
 
 //Set template engine
 app.set('view engine', 'ejs');
@@ -49,25 +49,27 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 //Set Session
-app.use((req, res, next) => {
-    if (!req.session.user) {
-        return next();
-    }
-    User.findById(req.session.user._id).then((user) => {
-        req.user = user;
-        next();
-    })
-});
+// app.use((req, res, next) => {
+//     if (!req.session.user) {
+//         return next();
+//     }
+//     User.findById(req.session.user._id).then((user) => {
+//         req.user = user;
+//         next();
+//     })
+// });
 
 //Check If User Authenticated
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.notifications = [];
-    next();
-})
+// app.use((req, res, next) => {
+//     res.locals.isAuthenticated = req.session.isLoggedIn;
+//     res.locals.notifications = [];
+//     next();
+// });
 
 //Route Middleware
+app.use('/auth',authRoutes);
 app.use('/admin',adminRoutes);
+app.use(userRoutes);
 
 //Connect with mongoDB
 Mongoose.connect('mongodb+srv://exam:exam@exam-ens1o.mongodb.net/admin?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
