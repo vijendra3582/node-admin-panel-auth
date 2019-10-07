@@ -5,6 +5,8 @@ const session = require('express-session');
 const Mongoose = require('mongoose');
 const MongoDbStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
+const isAuth = require('./middlewares/is-auth');
+const oldInput = require('old-input');
 
 //Import Models
 const User = require('./models/user');
@@ -39,6 +41,9 @@ app.use(session({
     store: store
 }));
 
+//Old Input
+app.use(oldInput);
+
 //Set flash
 app.use(flash());
 
@@ -68,11 +73,11 @@ app.use((req, res, next) => {
 
 //Route Middleware
 app.use('/auth',authRoutes);
-app.use('/admin',adminRoutes);
+app.use('/admin',isAuth,adminRoutes);
 app.use(userRoutes);
 
 //Connect with mongoDB
-Mongoose.connect('mongodb+srv://exam:vijendra@exam-ens1o.mongodb.net/admin?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
+Mongoose.connect('mongodb+srv://vijendra:vijendra@exam-ens1o.mongodb.net/exam?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
     console.log('Database connected');
     const server = app.listen(3001, () => {
         console.log('Database connected');

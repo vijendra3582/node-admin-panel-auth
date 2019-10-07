@@ -1,26 +1,46 @@
 <%- include('partials/header'); %>
 <div class="form">
     <h1><%- title %></h1>
+    <div id="infoMessage">
+        <% if(error[0]){ if(error[0].thenError){ %>
+            <span class="help-block"><%- error[0].thenError %></span>
+        <% }} %>
+    </div>
     <form class="form-horizontal" role="form" method="POST" action="/auth/register">
-        <div class="form-group">
+        <div class="form-group <% if(error[0]){ if(error[0].username){ %>has-error<% }} %>">
             <label for="username">Username</label>
-            <input id="username" type="text" class="form-control" name="username" placeholder="vijen-maurya" value="" required autofocus>
+            <input id="username" type="text" class="form-control" name="username" placeholder="vijen-maurya" value="<%= oldInput.value('username') %>" required autofocus>
+             <% if(error[0]){ if(error[0].username){ %>
+                <span class="help-block"><%- error[0].username.message %></span>
+            <% }} %>
         </div>
-        <div class="form-group">
+        <div class="form-group <% if(error[0]){ if(error[0].name){ %>has-error<% }} %>">
             <label for="name">Name</label>
-            <input id="name" type="text" class="form-control" name="name" placeholder="Vijendra Maurya" value="" required autofocus>
+            <input id="name" type="text" class="form-control" name="name" placeholder="Vijendra Maurya" value="<%= oldInput.value('name') %>" required autofocus>
+             <% if(error[0]){ if(error[0].name){ %>
+                <span class="help-block"><%- error[0].name.message %></span>
+            <% }} %>
         </div>
-        <div class="form-group">
+        <div class="form-group <% if(error[0]){ if(error[0].email){ %>has-error<% }} %>">
             <label for="email">E-Mail Address</label>
-            <input id="email" type="email" class="form-control" name="email" placeholder="vijendra3582@gmail.com" value="" required>
+            <input id="email" type="email" class="form-control" name="email" placeholder="vijendra3582@gmail.com" value="<%= oldInput.value('email') %>" required>
+             <% if(error[0]){ if(error[0].email){ %>
+                <span class="help-block"><%- error[0].email.message %></span>
+            <% }} %>
         </div>
-        <div class="form-group">
+        <div class="form-group <% if(error[0]){ if(error[0].password){ %>has-error<% }} %>">
             <label for="password">Password</label>
             <input id="password" type="password" class="form-control" name="password" placeholder="********" required>
+             <% if(error[0]){ if(error[0].password){ %>
+                <span class="help-block"><%- error[0].password.message %></span>
+            <% }} %>
         </div>
-        <div class="form-group">
+        <div class="form-group <% if(error[0]){ if(error[0].confirm_password){ %>has-error<% }} %>">
             <label for="password-confirm">Confirm Password</label>
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="********" required>
+            <input id="password-confirm" type="password" class="form-control" name="confirm_password" placeholder="********" required>
+             <% if(error[0]){ if(error[0].confirm_password){ %>
+                <span class="help-block"><%- error[0].confirm_password.message %></span>
+            <% }} %>
         </div>
         <div class="form-group">
             <input name="submit" value="Register" type="submit">

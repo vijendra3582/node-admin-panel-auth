@@ -1,7 +1,5 @@
 const User = require('./../models/user');
 const bcrypt = require('bcryptjs');
-const Validator = require('node-input-validator');
-const Helpers = require('./../helpers/validators');
 
 exports.renderIndex = (req, res) => {
     res.render('admin/index', {
@@ -19,21 +17,7 @@ exports.renderAddUser = (req, res) => {
 }
 
 exports.postAddUser = (req, res, next) => {
-    const v = new Validator(req.body, {
-        name: 'required|minLength:2|maxLength:50',
-        username: 'required|minLength:2|maxLength:50',
-        email: 'required|email|minLength:10|unique:User,email',
-        password: 'required',
-        cpassword: 'required'
-    });
-
-    v.check().then((matched) => {
-        if (!matched) {
-            req.flash('error', validator.errors);
-            res.redirect('admin/add-user');
-        }
-    });
-
+    
     if(password != cpassword){
         req.flash('error', 'Password and confirm password should be same.');
         res.redirect('admin/add-user');  

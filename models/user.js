@@ -9,9 +9,15 @@ var userSchema = new Schema({
     },
     username: {
         type: String,
+        set: toLower,
         required: true
     },
     email: {
+        type: String,
+        set: toLower,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     },
@@ -20,13 +26,14 @@ var userSchema = new Schema({
     },
     location: {
         type: String,
-    },
-    password: {
-        type: String,
-        required: true
-    },
+    }
+
 }, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });
 
 var User = mongoose.model('User', userSchema);
+
+function toLower(str) {
+    return str.toLowerCase();
+}
 
 module.exports = User;
