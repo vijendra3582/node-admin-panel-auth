@@ -187,3 +187,9 @@ exports.postRegister = (req, res, next) => {
         });
     });
 };
+
+exports.postLogout = (req, res, next) => {
+    req.session.destroy(err=>{
+        res.redirect('/auth/login');
+    });
+};
