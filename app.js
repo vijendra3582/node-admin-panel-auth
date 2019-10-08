@@ -1,5 +1,6 @@
 //Import Libraries
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const Mongoose = require('mongoose');
@@ -7,6 +8,10 @@ const MongoDbStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const isAuth = require('./middlewares/is-auth');
 const oldInput = require('old-input');
+const varConfig = require('./config/db');
+
+//Get port
+const portNode     = process.env.PORT || 3001;
 
 //Import Models
 const User = require('./models/user');
@@ -20,7 +25,7 @@ const app = express();
 
 //Create Store For Session
 const store = new MongoDbStore({
-    uri: 'mongodb+srv://exam:vijendra@exam-ens1o.mongodb.net/exam',
+    uri: varConfig.storeURI,
     collection: 'sessions'
 });
 
@@ -31,11 +36,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Set public folder
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Config Session
 app.use(session({
-    secret: 'abcdef',
+    secret: varConfig.sessionSecret,
     resave: false,
     saveUninitialized: false,
     store: store
@@ -77,9 +82,9 @@ app.use('/admin',isAuth,adminRoutes);
 app.use(userRoutes);
 
 //Connect with mongoDB
-Mongoose.connect('mongodb+srv://vijendra:vijendra@exam-ens1o.mongodb.net/exam?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
+Mongoose.connect(varConfig.mongooseURI,{ useNewUrlParser: true , useUnifiedTopology: true }).then(() => {
     console.log('Database connected');
-    const server = app.listen(3001, () => {
+    const server = app.listen(portNode, () => {
         console.log('Database connected');
     });
 
