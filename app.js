@@ -6,9 +6,11 @@ const session = require('express-session');
 const Mongoose = require('mongoose');
 const MongoDbStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
+const mailer = require('express-mailer');
 const isAuth = require('./middlewares/is-auth');
 const oldInput = require('old-input');
 const varConfig = require('./config/db');
+const varMailConfig = require('./config/mail');
 
 //Get port
 const portNode     = process.env.PORT || 3001;
@@ -22,6 +24,19 @@ const userRoutes  = require('./routes/user');
 const authRoutes  = require('./routes/auth');
 
 const app = express();
+
+//Mailer Setup
+mailer.extend(app, {
+    from: varMailConfig.from,
+    host: varMailConfig.host, // hostname
+    secureConnection: varMailConfig.secureConnection, // use SSL
+    port: varMailConfig.port, // port for secure SMTP
+    transportMethod: varMailConfig.transportMethod, // default is SMTP. Accepts anything that nodemailer accepts
+    auth: {
+      user: varMailConfig.auth.user,
+      pass: varMailConfig.auth.pass
+    }
+  });
 
 //Create Store For Session
 const store = new MongoDbStore({

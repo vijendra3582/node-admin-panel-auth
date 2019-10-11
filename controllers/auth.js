@@ -107,6 +107,20 @@ exports.postForgotPassword = (req, res, next) => {
             res.redirect('/auth/forgot-password');
         }
     });
+
+    //Prepare Variable
+    const email = req.body.email;
+    //Check email
+    User.findOne({ email: email }).then((isMatchedEmail) => {
+        if (!isMatchedEmail) {
+            req.flash('error', { email: { message: 'This email id is not registered with us.' } });
+            res.redirect('/auth/forgot-password');
+        }
+        
+    }).catch((err) => {
+        //Unique email catch
+        res.redirect('/auth/forgot-password');
+    });
 };
 
 exports.postResetPassword = (req, res, next) => {
