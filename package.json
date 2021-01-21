@@ -34,6 +34,6 @@
     "node-input-validator": "^4.1.0",
     "old-input": "^1.1.0",
     "path": "^0.12.7",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.4.0"
   }
 }
